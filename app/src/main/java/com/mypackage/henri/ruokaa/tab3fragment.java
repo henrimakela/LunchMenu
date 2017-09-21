@@ -14,12 +14,12 @@ import android.widget.TextView;
 
 public class tab3fragment extends Fragment {
     private static final String TAG = "tab3fragment";
-    TextView txt;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab3_fragment, container, false);
-        txt = (TextView)view.findViewById(R.id.tab3Txt);
+
         return view;
     }
 }
