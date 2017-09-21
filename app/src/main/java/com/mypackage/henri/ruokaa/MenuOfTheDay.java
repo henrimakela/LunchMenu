@@ -30,9 +30,9 @@ public class MenuOfTheDay {
     @Override
     public String toString(){
 
+        String desc = this.description.replace("<br>", "");
 
-
-        return this.title + "\n" + this.description;
+        return this.title + "\n" + desc;
     }
 
 }
