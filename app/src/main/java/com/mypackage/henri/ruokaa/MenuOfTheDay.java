@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class MenuOfTheDay {
 
+
+    // xml tiedostosta valitut Tagit, jotka halutaan tallentaa objektiin. Kaikkia tageja ei tarvita, vaikka tiedostossa olisi muitakin
     private String title;
     private String description;
 

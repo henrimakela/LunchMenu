@@ -28,6 +28,9 @@ public class ParseXml {
         return menus;
     }
 
+
+
+    //muuttaa xmlDatan objektiksi
     public boolean parse(String xmlData){
         boolean status = true;
         boolean inEntry = false;
@@ -35,6 +38,7 @@ public class ParseXml {
 
         String textValue = "";
 
+        //familiarize yourself with XMLPULLPARSER in developer.android.com documents
         try{
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);

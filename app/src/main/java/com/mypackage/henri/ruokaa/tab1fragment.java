@@ -1,5 +1,6 @@
 package com.mypackage.henri.ruokaa;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,18 +38,46 @@ public class tab1fragment extends Fragment{
         menuList = (ListView)view.findViewById(R.id.ruokalistaView);
         DownloadData downloadData = new DownloadData();
         downloadData.execute("http://www.amica.fi/modules/MenuRss/MenuRss/CurrentWeek?costNumber=0217&language=fi");
+
+
+
+
+        //Menun jakaminen
+        menuList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String text = menuList.getItemAtPosition(i).toString();
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+
+                return false;
+            }
+        });
+
+
+
         return view;
     }
 
+    //Lataa xml tiedoston sivulta AsyncTaskilla, jotta lataus ei kuormita käytettävyyttä.
     private class DownloadData extends AsyncTask<String, Void, String> {
         private static final String TAG = "DownloadData";
 
         @Override
         protected String doInBackground(String... strings) {
 
+            // parametrina oleva string on ladattava data sivulta. String.. tarkoittaa että stringeja voi olla useampi.
+            // esim kahdesta urlista ladatut tiedot
             String rssFeed = downloadXML(strings[0]);
-            return rssFeed;
+            return rssFeed;  //==> lähettää metodiin onPostExecute parametriksi
         }
+
+
 
         @Override
         protected void onPostExecute(String s) {
@@ -55,19 +85,17 @@ public class tab1fragment extends Fragment{
 
 
             ParseXml xmlParser = new ParseXml();
-            xmlParser.parse(s);
+            xmlParser.parse(s);// muutetaan parametrissä lähetetty xml objektiksi ja lisätään Arraylistiin jossa on kaikki menut
 
+            // adapteri jossa lisätään list_viewiin kaikki MenuOfTheDay objektit getMenus()-metodilla
             ArrayAdapter<MenuOfTheDay> adapter = new ArrayAdapter<MenuOfTheDay>(getView().getContext(), R.layout.list_item, xmlParser.getMenus());
             menuList.setAdapter(adapter);
-
-
-
-
-
 
         }
 
         private String downloadXML(String urlPath){
+
+            //ladataan xml sivulta. Metodi joka lataa tiedot, mutta käytetään DownloadData-luokan sisällä, jotta siitä saadaan AsyncTask
             StringBuilder xmlResult = new StringBuilder();
 
             try{
