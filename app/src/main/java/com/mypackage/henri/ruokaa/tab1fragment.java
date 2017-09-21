@@ -28,6 +28,7 @@ public class tab1fragment extends Fragment{
 
     private static final String TAG = "tab1fragment";
     ListView menuList;
+    Intent dailyMenuIntent;
 
     @Nullable
     @Override
@@ -36,10 +37,23 @@ public class tab1fragment extends Fragment{
 
 
         menuList = (ListView)view.findViewById(R.id.ruokalistaView);
+        dailyMenuIntent = new Intent(getContext(), DailyMenuActivity.class);
+
         DownloadData downloadData = new DownloadData();
         downloadData.execute("http://www.amica.fi/modules/MenuRss/MenuRss/CurrentWeek?costNumber=0217&language=fi");
 
+        //Päivän menun tarkastelu. Avaa uuden activityn ja lähettää tiedot intentillä
 
+        menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MenuOfTheDay m = (MenuOfTheDay)menuList.getItemAtPosition(i);
+                String desc = m.getDescription();
+
+                dailyMenuIntent.putExtra("Description", desc);
+                startActivity(dailyMenuIntent);
+            }
+        });
 
 
         //Menun jakaminen
