@@ -32,7 +32,7 @@ public class tab2fragment extends Fragment {
 
     ImageButton addFavorite;
     ArrayList<String> suosikkiRuoat;
-    ListView suosikkiRuoatList;
+    public static ListView suosikkiRuoatList;
 
     @Nullable
     @Override
@@ -83,13 +83,19 @@ public class tab2fragment extends Fragment {
 
     private void loadFavorites(){
 
-        // TUO SPLITTI EI TOIMI HYVIN. PITÄÄ SÄÄTÄÄ REGEXIT KUNTOON
+
         suosikkiRuoat = new ArrayList<>();
 
         String[] foodz = readFromFile("favorites").split("\n");
 
         for(String r : foodz){
-            suosikkiRuoat.add(r);
+            if(!r.isEmpty()){
+                if(!r.contains("LOUNAS")){
+                    suosikkiRuoat.add(r);
+                }
+
+            }
+
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.list_item, suosikkiRuoat);

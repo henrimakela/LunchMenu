@@ -1,5 +1,8 @@
 package com.mypackage.henri.ruokaa;
 
+import android.app.Activity;
+
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -36,5 +39,7 @@ public class MenuOfTheDay {
 
         return this.title + "\n" + desc;
     }
+
+
 
 }
