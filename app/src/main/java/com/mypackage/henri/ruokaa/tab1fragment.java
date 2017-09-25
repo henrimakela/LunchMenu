@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,7 +43,6 @@ public class tab1fragment extends Fragment{
 
         DownloadData downloadData = new DownloadData();
         downloadData.execute("http://www.amica.fi/modules/MenuRss/MenuRss/CurrentWeek?costNumber=0217&language=fi");
-
 
         //Päivän menun tarkastelu. Avaa uuden activityn ja lähettää tiedot intentillä
 
@@ -156,18 +156,6 @@ public class tab1fragment extends Fragment{
 
 
     }
-    //EI TOIMI VIELÄ
-    private void checkForFaves(){
-
-        for(int i = 0; i < tab2fragment.suosikkiRuoatList.getCount(); i++){
-            String suosikki = tab2fragment.suosikkiRuoatList.getItemAtPosition(i).toString();
-            for(int j = 0; j < menuList.getCount(); j++){
-                if(menuList.getItemAtPosition(j).toString().contains(suosikki)){
-                    menuList.getChildAt(j).setBackgroundColor(getResources().getColor(R.color.favorite));
-                }
-            }
-        }
 
 
-    }
 }
