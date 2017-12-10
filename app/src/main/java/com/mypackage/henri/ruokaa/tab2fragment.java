@@ -96,17 +96,11 @@ public class tab2fragment extends Fragment {
 
 
         suosikkiRuoat = new ArrayList<>();
+        String foodz = readFromFile("favorites");
+        String[] foodsR= foodz.split("([a-z])\\1+\\1+");
+        for(String r : foodsR){
 
-        String[] foodz = readFromFile("favorites").split("\n");
-
-        for(String r : foodz){
-            if(!r.isEmpty()){
-                if(!r.contains("LOUNAS")){
-                    suosikkiRuoat.add(r);
-                }
-
-            }
-
+            suosikkiRuoat.add(r);
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.list_item, suosikkiRuoat);

@@ -1,8 +1,10 @@
 package com.mypackage.henri.ruokaa;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -80,7 +82,8 @@ public class tab1fragment extends Fragment{
         return view;
     }
 
-    //Lataa xml tiedoston sivulta AsyncTaskilla, jotta lataus ei kuormita käytettävyyttä.
+    //Lataa xml tiedoston sivulta AsyncTaskilla
+
     private class DownloadData extends AsyncTask<String, Void, String> {
         private static final String TAG = "DownloadData";
 
@@ -104,7 +107,22 @@ public class tab1fragment extends Fragment{
             xmlParser.parse(s);// muutetaan parametrissä lähetetty xml objektiksi ja lisätään Arraylistiin jossa on kaikki menut
 
             // adapteri jossa lisätään list_viewiin kaikki MenuOfTheDay objektit getMenus()-metodilla
-            ArrayAdapter<MenuOfTheDay> adapter = new ArrayAdapter<MenuOfTheDay>(getView().getContext(), R.layout.list_item, xmlParser.getMenus());
+            ArrayAdapter<MenuOfTheDay> adapter = new ArrayAdapter<MenuOfTheDay>(getView().getContext(), R.layout.list_item, xmlParser.getMenus()){
+
+                @NonNull
+                @Override
+                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                    View view = super.getView(position, convertView, parent);
+                    if(position % 2 == 1){
+                        view.setBackgroundColor(Color.parseColor("#FFB6B546"));
+                    }
+                    else{
+                        view.setBackgroundColor(Color.parseColor("#FFCCCB4C"));
+                    }
+
+                    return view;
+                }
+            };
             menuList.setAdapter(adapter);
 
 

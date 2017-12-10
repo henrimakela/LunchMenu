@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     tab2fragment tab2 = new tab2fragment();
                     return tab2;
-                case 2:
+                /*case 2:
                     tab3fragment tab3 = new tab3fragment();
-                    return tab3;
+                    return tab3;*/
             }
 
             return null;
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                     return "Ruokalista";
                 case 1:
                     return "Suosikit";
-                case 2:
-                    return "Tulossa";
+                /*case 2:
+                    return "Tulossa";*/
             }
             return null;
         }
