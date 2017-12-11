@@ -19,6 +19,7 @@ public class ParseXml {
     private ArrayList<MenuOfTheDay> menus;
 
 
+
     public ParseXml(){
         this.menus = new ArrayList<>();
 

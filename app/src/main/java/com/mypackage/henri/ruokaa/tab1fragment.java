@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,9 @@ public class tab1fragment extends Fragment{
 
     private static final String TAG = "tab1fragment";
     ListView menuList;
+    ArrayAdapter<String> kasvisAdapter;
+    ArrayAdapter<MenuOfTheDay>normiAdapter;
+
     Intent dailyMenuIntent;
 
     @Nullable
@@ -43,10 +48,10 @@ public class tab1fragment extends Fragment{
         menuList = (ListView)view.findViewById(R.id.ruokalistaView);
         dailyMenuIntent = new Intent(getContext(), DailyMenuActivity.class);
 
+
         DownloadData downloadData = new DownloadData();
         downloadData.execute("http://www.amica.fi/modules/MenuRss/MenuRss/CurrentWeek?costNumber=0217&language=fi");
 
-        //Päivän menun tarkastelu. Avaa uuden activityn ja lähettää tiedot intentillä
 
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,6 +63,7 @@ public class tab1fragment extends Fragment{
                 startActivity(dailyMenuIntent);
             }
         });
+
 
 
         //Menun jakaminen
@@ -107,12 +113,13 @@ public class tab1fragment extends Fragment{
             xmlParser.parse(s);// muutetaan parametrissä lähetetty xml objektiksi ja lisätään Arraylistiin jossa on kaikki menut
 
             // adapteri jossa lisätään list_viewiin kaikki MenuOfTheDay objektit getMenus()-metodilla
-            ArrayAdapter<MenuOfTheDay> adapter = new ArrayAdapter<MenuOfTheDay>(getView().getContext(), R.layout.list_item, xmlParser.getMenus()){
-
+            normiAdapter = new ArrayAdapter<MenuOfTheDay>(getView().getContext(), R.layout.list_item, xmlParser.getMenus()){
                 @NonNull
                 @Override
                 public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                     View view = super.getView(position, convertView, parent);
+
+
                     if(position % 2 == 1){
                         view.setBackgroundColor(Color.parseColor("#FFB6B546"));
                     }
@@ -123,7 +130,13 @@ public class tab1fragment extends Fragment{
                     return view;
                 }
             };
-            menuList.setAdapter(adapter);
+
+
+
+            menuList.setAdapter(normiAdapter);
+
+
+
 
 
         }

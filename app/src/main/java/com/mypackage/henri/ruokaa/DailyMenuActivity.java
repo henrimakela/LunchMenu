@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,6 +37,12 @@ public class DailyMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_menu);
 
+        ActionBar actionBar = this.getSupportActionBar();
+
+        // Set the action bar back button to look like an up button
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         //vastaanotetaan intent ja sen tuoma string
 
@@ -53,7 +62,6 @@ public class DailyMenuActivity extends AppCompatActivity {
         ArrayList<String> foodList = new ArrayList<>();
 
         for(String f : foods){
-            //String[] r = f.split("\\(");
             foodList.add(f);
         }
 
@@ -79,7 +87,7 @@ public class DailyMenuActivity extends AppCompatActivity {
 
         dailyList.setAdapter(adapter);
 
-        //LISÄÄ RUOAN LEMPIRUOKIIN. JOKU SELKEÄMPI VAIHTOEHTO KUIN LONGCLICK?
+        //LISÄÄ RUOAN LEMPIRUOKIIN.
         dailyList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -97,9 +105,18 @@ public class DailyMenuActivity extends AppCompatActivity {
 
 
 
+
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        // When the home button is pressed, take the user back to the VisualizerActivity
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     private void addToFavorites(String txt){
